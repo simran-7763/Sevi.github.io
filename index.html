@@ -229,15 +229,15 @@ flex-direction: column;
 }
 .viewer {
 flex: 1 1 auto;
-min-height: 200px; /* Ensure minimum height */
+min-height: 200px; /* Minimum height to ensure visibility */
 }
 .side {
 width: 100%;
 }
 .slide img {
-object-fit: contain;
+object-fit: contain; /* Match laptop for consistency */
 width: 100%;
-height: auto;
+height: auto; /* Let image determine height */
 }
 .top-left {
 flex-direction: column;
@@ -327,13 +327,14 @@ const siteMessage = `Standing by the waves with you, <span style="color:#ff6b6b;
 
 document.getElementById('messageArea').innerHTML = siteMessage;
 
-const images = ['1.jpeg', '2.webp', '3.jpg', '4.jpg', '5.jpeg']; // Updated file names based on repo
+const images = ['1.jpeg', '2.webp', '3.jpg', '4.jpg', '5.jpeg'];
 const audioSrc = 'mysong.mp3';
 const trackTitle = 'Romantic Melody';
 const trackArtist = 'Anmol Sartaj';
 
 const slidesEl = document.getElementById('slides');
 const thumbsEl = document.getElementById('thumbs');
+const viewerEl = document.querySelector('.viewer');
 
 let current = 0;
 images.forEach((src, i) => {
@@ -364,7 +365,23 @@ thumbEls[current].classList.remove('active');
 current = idx;
 slideEls[current].classList.add('is-active');
 thumbEls[current].classList.add('active');
+
+// Adjust viewer height based on active image's natural height
+const activeImg = slideEls[current].querySelector('img');
+if (activeImg.complete) {
+adjustViewerHeight(activeImg);
+} else {
+activeImg.onload = () => adjustViewerHeight(activeImg);
+}
 resetAuto();
+}
+
+function adjustViewerHeight(img) {
+const naturalWidth = img.naturalWidth;
+const naturalHeight = img.naturalHeight;
+const viewerWidth = viewerEl.offsetWidth;
+const aspectRatio = naturalHeight / naturalWidth;
+viewerEl.style.minHeight = `${viewerWidth * aspectRatio}px`;
 }
 
 document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
