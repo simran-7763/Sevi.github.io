@@ -2,77 +2,281 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>Memory Page for Sevi</title>
 <style>
-:root{
---bg:#0f0f12;
---card:#0b0b0d;
---glass: rgba(255,255,255,0.06);
+:root {
+--bg: #0f0f12;
+--card: #0b0b0d;
+--glass: rgba(255, 255, 255, 0.06);
 --accent: #ff6b6b;
 --muted: #bfc3c8;
 --fw: 500;
 --radius: 14px;
 }
-html,body{height:100%}
-body{
-margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
-background: linear-gradient(180deg,#05060a 0%, #0b0d12 100%);
-color:#fff; -webkit-font-smoothing:antialiased;
-display:flex;align-items:center;justify-content:center;padding:20px;
+
+html, body {
+height: 100%;
+margin: 0;
+font-family: Inter, ui-sans-serif, system-ui, Segoe UI, Roboto, "Helvetica Neue", Arial;
+background: linear-gradient(180deg, #05060a 0%, #0b0d12 100%);
+color: #fff;
+-webkit-font-smoothing: antialiased;
+overflow-x: hidden;
 }
-.frame{
-width:100%; max-width:980px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-border-radius:18px; padding:18px; box-shadow: 0 10px 30px rgba(2,6,23,0.6);
-overflow:hidden; position:relative;
+
+body {
+padding: 10px;
+display: flex;
+align-items: center;
+justify-content: center;
 }
-.stage{display:flex; gap:18px; align-items:stretch; flex-wrap:wrap;}
-.viewer{
-flex:1 1 560px; min-height:360px; position:relative; border-radius:12px; overflow:hidden;
-background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+
+.frame {
+width: 100%;
+max-width: 980px;
+background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+border-radius: 18px;
+padding: 18px;
+box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
+overflow: hidden;
+position: relative;
 }
-.slides{width:100%;height:100%; position:relative; touch-action:pan-y; z-index:1;}
-.slide{
-position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-backface-visibility:hidden; opacity:0; transition:opacity 900ms cubic-bezier(.2,.9,.2,1), transform 900ms;
-transform: scale(.98);
+
+.stage {
+display: flex;
+gap: 18px;
+align-items: stretch;
+flex-wrap: wrap;
 }
-.slide img{width:100%; height:100%; object-fit:cover; display:block; filter: saturate(1.05) contrast(1.02);}
-.slide.is-active{opacity:1; transform:scale(1);}
+
+.viewer {
+flex: 1 1 560px;
+min-height: 200px;
+position: relative;
+border-radius: 12px;
+overflow: hidden;
+background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+}
+
+.slides {
+width: 100%;
+height: 100%;
+position: relative;
+touch-action: pan-y;
+z-index: 1;
+}
+
+.slide {
+position: absolute;
+inset: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+backface-visibility: hidden;
+opacity: 0;
+transition: opacity 900ms cubic-bezier(0.2, 0.9, 0.2, 1), transform 900ms;
+transform: scale(0.98);
+}
+
+.slide img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+display: block;
+filter: saturate(1.05) contrast(1.02);
+}
+
+.slide.is-active {
+opacity: 1;
+transform: scale(1);
+}
+
 .top-left {
-position: absolute; left:14px; top:14px; display:flex; gap:8px; z-index:10;
+position: absolute;
+left: 14px;
+top: 14px;
+display: flex;
+gap: 8px;
+z-index: 10;
+}
+
+.btn {
+background: var(--glass);
+border: 1px solid rgba(255, 255, 255, 0.06);
+padding: 10px 15px; /* Larger padding for touch */
+border-radius: 10px;
+font-weight: 600;
+color: var(--muted);
+cursor: pointer;
+backdrop-filter: blur(6px);
+display: flex;
+gap: 8px;
+align-items: center;
+font-size: 16px; /* Larger text for readability */
+min-width: 80px; /* Ensure touch target size */
+}
+
+.btn.primary {
+background: linear-gradient(90deg, rgba(255, 107, 107, 0.12), rgba(255, 107, 107, 0.06));
+color: #fff;
+border: 1px solid rgba(255, 107, 107, 0.18);
+}
+
+.center-controls {
+position: absolute;
+left: 50%;
+top: 50%;
+transform: translate(-50%, -50%);
+z-index: 9;
+display: flex;
+gap: 20px; /* Wider gap for touch */
+}
+
+.nav-circle {
+width: 54px;
+height: 54px;
+border-radius: 50%;
+background: rgba(0, 0, 0, 0.35);
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+border: 1px solid rgba(255, 255, 255, 0.06);
+font-size: 24px; /* Larger icons */
+}
+
+.message {
+margin-top: 12px;
+padding: 14px;
+border-radius: 12px;
+font-size: 16px;
+color: #f7f7f9;
+background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+border: 1px solid rgba(255, 255, 255, 0.035);
+}
+
+.side {
+width: 100%; /* Full width on mobile */
+display: flex;
+flex-direction: column;
+gap: 14px;
+}
+
+.audio-card, .qr-card {
+padding: 12px;
+border-radius: 12px;
+background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.track {
+display: flex;
+gap: 10px;
+align-items: center;
+}
+
+.track .info {
+flex: 1;
+}
+
+.track .title {
+font-weight: 700;
+font-size: 18px; /* Larger title */
+}
+
+.controls {
+display: flex;
+gap: 10px;
+align-items: center;
+margin-top: 10px;
+}
+
+.thumbs {
+display: flex;
+gap: 8px;
+margin-top: 12px;
+overflow: auto;
+padding-bottom: 6px;
+}
+
+.thumbs img {
+width: 64px;
+height: 44px;
+object-fit: cover;
+border-radius: 8px;
+cursor: pointer;
+opacity: 0.9;
+border: 2px solid transparent;
+}
+
+.thumbs img.active {
+border-color: rgba(255, 255, 255, 0.14);
+opacity: 1;
+}
+
+.qr-card img {
+width: 160px;
+height: 160px;
+display: block;
+margin: 0 auto;
+border-radius: 8px;
+background: #fff;
+padding: 6px;
+}
+
+@media (max-width: 860px) {
+.stage {
+flex-direction: column;
+}
+.viewer {
+min-height: 150px; /* Smaller height on mobile */
 }
 .btn {
-background:var(--glass); border:1px solid rgba(255,255,255,0.06);
-padding:8px 10px; border-radius:10px; font-weight:600; color:var(--muted); cursor:pointer;
-backdrop-filter: blur(6px); display:flex; gap:8px; align-items:center;
+padding: 12px 18px; /* Even larger touch targets */
+font-size: 18px;
 }
-.btn.primary{ background: linear-gradient(90deg, rgba(255,107,107,0.12), rgba(255,107,107,0.06)); color:#fff; border:1px solid rgba(255,107,107,0.18) }
-.center-controls{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:9; display:flex; gap:12px; }
-.nav-circle{ width:54px; height:54px; border-radius:50%; background:rgba(0,0,0,0.35); display:flex; align-items:center; justify-content:center; cursor:pointer; border:1px solid rgba(255,255,255,0.06); }
+.nav-circle {
+width: 60px;
+height: 60px;
+font-size: 28px; /* Bigger navigation circles */
+}
+.center-controls {
+gap: 25px;
+}
 .message {
-margin-top:12px; padding:14px; border-radius:12px; font-size:16px; color: #f7f7f9;
-background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-border:1px solid rgba(255,255,255,0.035);
+font-size: 14px; /* Slightly smaller text to fit */
 }
-.side {
-width:300px; min-width:240px; display:flex; flex-direction:column; gap:14px;
+.thumbs img {
+width: 50px;
+height: 35px; /* Smaller thumbnails on mobile */
 }
-.audio-card, .qr-card {
-padding:12px; border-radius:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-border:1px solid rgba(255,255,255,0.03);
 }
-.track {display:flex; gap:10px; align-items:center;}
-.track .info{flex:1}
-.track .title{font-weight:700}
-.controls{display:flex; gap:8px; align-items:center; margin-top:10px}
-.thumbs {display:flex; gap:8px; margin-top:12px; overflow:auto; padding-bottom:6px;}
-.thumbs img { width:64px; height:44px; object-fit:cover; border-radius:8px; cursor:pointer; opacity:0.9; border:2px solid transparent; }
-.thumbs img.active { border-color: rgba(255,255,255,0.14); opacity:1 }
-.qr-card img{ width:160px; height:160px; display:block; margin:0 auto; border-radius:8px; background:#fff; padding:6px; }
-@media (max-width:860px){
-.stage{flex-direction:column}
-.side{width:100%}
+
+@media (max-width: 480px) {
+.top-left {
+flex-direction: column;
+align-items: flex-start;
+gap: 10px;
+}
+.btn {
+width: 100%; /* Full-width buttons on very small screens */
+justify-content: center;
+}
+.nav-circle {
+width: 50px;
+height: 50px;
+}
+.center-controls {
+gap: 15px;
+}
+.track .title {
+font-size: 16px;
+}
+.qr-card img {
+width: 140px;
+height: 140px;
+}
 }
 </style>
 </head>
@@ -94,32 +298,32 @@ border:1px solid rgba(255,255,255,0.03);
 </div>
 <div class="side">
 <div class="audio-card">
-<div style="display:flex;align-items:center;gap:12px;">
-<div style="width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#ff6b6b,#ff9b9b);display:flex;align-items:center;justify-content:center;font-weight:800">♪</div>
+<div style="display: flex; align-items: center; gap: 12px;">
+<div style="width: 56px; height: 56px; border-radius: 10px; background: linear-gradient(135deg, #ff6b6b, #ff9b9b); display: flex; align-items: center; justify-content: center; font-weight: 800">♪</div>
 <div class="info">
 <div class="title" id="trackTitle">Romantic Melody</div>
-<div class="subtitle" id="trackArtist" style="color:var(--muted);font-size:13px">Anmol Sartaj</div>
+<div class="subtitle" id="trackArtist" style="color: var(--muted); font-size: 13px">Anmol Sartaj</div>
 </div>
 </div>
 <div class="controls">
 <button class="btn" id="audioPlay">Play</button>
-<input id="vol" type="range" min="0" max="1" step="0.01" value="0.6" style="flex:1">
-<div id="timeLabel" style="min-width:60px;text-align:right;color:var(--muted);font-size:13px">0:00</div>
+<input id="vol" type="range" min="0" max="1" step="0.01" value="0.6" style="flex: 1">
+<div id="timeLabel" style="min-width: 60px; text-align: right; color: var(--muted); font-size: 13px">0:00</div>
 </div>
-<div style="margin-top:10px;color:var(--muted);font-size:13px">Tip: Mobile browsers often block autoplay, so tap Play if the music doesn't start automatically.</div>
+<div style="margin-top: 10px; color: var(--muted); font-size: 13px">Tip: Mobile browsers often block autoplay, so tap Play if the music doesn't start automatically.</div>
 </div>
 <div class="audio-card">
-<div style="font-weight:700;margin-bottom:8px">Thumbnails</div>
+<div style="font-weight: 700; margin-bottom: 8px">Thumbnails</div>
 <div class="thumbs" id="thumbs"></div>
 </div>
-<div class="qr-card" style="text-align:center">
-<div style="font-weight:700;margin-bottom:8px">QR to this page</div>
+<div class="qr-card" style="text-align: center">
+<div style="font-weight: 700; margin-bottom: 8px">QR to this page</div>
 <img id="qrImg" alt="qr code" src="" />
-<div style="margin-top:8px;display:flex;gap:8px;justify-content:center">
+<div style="margin-top: 8px; display: flex; gap: 8px; justify-content: center">
 <button class="btn" id="generateQR">Generate QR</button>
 <a id="downloadQR" class="btn" download="qr.png">⬇ Download</a>
 </div>
-<div style="margin-top:10px;color:var(--muted);font-size:13px">Scan to open this page on mobile.</div>
+<div style="margin-top: 10px; color: var(--muted); font-size: 13px">Scan to open this page on mobile.</div>
 </div>
 </div>
 </div>
@@ -131,7 +335,7 @@ const siteMessage = `Standing by the waves with you, <span style="color:#ff6b6b;
 
 document.getElementById('messageArea').innerHTML = siteMessage;
 
-const images = ['1.jpeg','2.webp','3.jpg','4.jpg','5.jpeg']; // Updated to .jpeg
+const images = ['1.jpeg', '2.webp', '3.jpg', '4.jpg', '5.jpeg'];
 const audioSrc = 'mysong.mp3';
 const trackTitle = 'Romantic Melody';
 const trackArtist = 'Anmol Sartaj';
@@ -140,87 +344,102 @@ const slidesEl = document.getElementById('slides');
 const thumbsEl = document.getElementById('thumbs');
 
 let current = 0;
-images.forEach((src,i)=>{
-const s=document.createElement('div');
-s.className='slide'+(i===0?' is-active':'');
-const img=document.createElement('img');
-img.src=src;
-img.alt=`Slide ${i+1}`;
+images.forEach((src, i) => {
+const s = document.createElement('div');
+s.className = 'slide' + (i === 0 ? ' is-active' : '');
+const img = document.createElement('img');
+img.src = src;
+img.alt = `Slide ${i + 1}`;
 s.appendChild(img);
 slidesEl.appendChild(s);
 
-const t=document.createElement('img');
-t.src=src;
-t.dataset.index=i;
-if(i===0) t.classList.add('active');
-t.addEventListener('click', ()=>goTo(parseInt(t.dataset.index)));
+const t = document.createElement('img');
+t.src = src;
+t.dataset.index = i;
+if (i === 0) t.classList.add('active');
+t.addEventListener('click', () => goTo(parseInt(t.dataset.index)));
 thumbsEl.appendChild(t);
 });
 
 const slideEls = Array.from(document.querySelectorAll('.slide'));
 const thumbEls = Array.from(document.querySelectorAll('.thumbs img'));
 
-function goTo(idx){
-if(idx<0) idx=images.length-1;
-if(idx>=images.length) idx=0;
+function goTo(idx) {
+if (idx < 0) idx = images.length - 1;
+if (idx >= images.length) idx = 0;
 slideEls[current].classList.remove('is-active');
 thumbEls[current].classList.remove('active');
-current=idx;
+current = idx;
 slideEls[current].classList.add('is-active');
 thumbEls[current].classList.add('active');
 resetAuto();
 }
 
-document.getElementById('prevBtn').addEventListener('click', ()=>goTo(current-1));
-document.getElementById('nextBtn').addEventListener('click', ()=>goTo(current+1));
+document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
 
-let auto=true;
-let autoInterval=5000;
-let autoTimer=setInterval(()=>goTo(current+1),autoInterval);
-function resetAuto(){if(auto){clearInterval(autoTimer);autoTimer=setInterval(()=>goTo(current+1),autoInterval);}}
-document.getElementById('toggleAuto').addEventListener('click', ()=>{auto=!auto;document.getElementById('toggleAuto').textContent=auto?'⟳':'⏸';resetAuto();});
+let auto = true;
+let autoInterval = 5000;
+let autoTimer = setInterval(() => goTo(current + 1), autoInterval);
+function resetAuto() { if (auto) { clearInterval(autoTimer); autoTimer = setInterval(() => goTo(current + 1), autoInterval); } }
+document.getElementById('toggleAuto').addEventListener('click', () => { auto = !auto; document.getElementById('toggleAuto').textContent = auto ? '⟳' : '⏸'; resetAuto(); });
 
-const audio=new Audio();
-audio.src=audioSrc;
-audio.loop=true;
-audio.volume=0.6;
+const audio = new Audio();
+audio.src = audioSrc;
+audio.loop = true;
+audio.volume = 0.6;
 
-const playBtn=document.getElementById('audioPlay');
-const globalPlayPause=document.getElementById('playPauseBtn');
-const muteBtn=document.getElementById('muteBtn');
-const vol=document.getElementById('vol');
-const timeLabel=document.getElementById('timeLabel');
+const playBtn = document.getElementById('audioPlay');
+const globalPlayPause = document.getElementById('playPauseBtn');
+const muteBtn = document.getElementById('muteBtn');
+const vol = document.getElementById('vol');
+const timeLabel = document.getElementById('timeLabel');
 
 playBtn.addEventListener('click', toggleAudio);
 globalPlayPause.addEventListener('click', toggleAudio);
-muteBtn.addEventListener('click', ()=>{audio.muted=!audio.muted; muteBtn.textContent=audio.muted?'🔇 Muted':'🔊 Unmuted';});
-vol.addEventListener('input', ()=>audio.volume=parseFloat(vol.value));
+muteBtn.addEventListener('click', () => { audio.muted = !audio.muted; muteBtn.textContent = audio.muted ? '🔇 Muted' : '🔊 Unmuted'; });
+vol.addEventListener('input', () => audio.volume = parseFloat(vol.value));
 
-function toggleAudio(){
-if(audio.paused){audio.play().catch(err=>console.warn('Autoplay blocked',err)); playBtn.textContent='Pause'; globalPlayPause.textContent='⏸ Pause';}
-else{audio.pause(); playBtn.textContent='Play'; globalPlayPause.textContent='▶ Play';}
+function toggleAudio() {
+if (audio.paused) {
+audio.play().catch(err => console.warn('Autoplay blocked', err));
+playBtn.textContent = 'Pause';
+globalPlayPause.textContent = '⏸ Pause';
+} else {
+audio.pause();
+playBtn.textContent = 'Play';
+globalPlayPause.textContent = '▶ Play';
+}
 }
 
-audio.addEventListener('timeupdate', ()=>{
-const s=Math.floor(audio.currentTime%60);
-const m=Math.floor(audio.currentTime/60);
-timeLabel.textContent=`${m}:${s.toString().padStart(2,'0')}`;
+audio.addEventListener('timeupdate', () => {
+const s = Math.floor(audio.currentTime % 60);
+const m = Math.floor(audio.currentTime / 60);
+timeLabel.textContent = `${m}:${s.toString().padStart(2, '0')}`;
 });
 
-if(!audioSrc){playBtn.textContent='No audio set'; playBtn.disabled=true; globalPlayPause.disabled=true; muteBtn.disabled=true;}
+if (!audioSrc) {
+playBtn.textContent = 'No audio set';
+playBtn.disabled = true;
+globalPlayPause.disabled = true;
+muteBtn.disabled = true;
+}
 
-document.getElementById('shareBtn').addEventListener('click', async ()=>{
-try{const url=location.href; if(navigator.share) await navigator.share({title:document.title,url}); else {await navigator.clipboard.writeText(url); alert('Link copied');}}catch(e){console.warn(e);alert('Could not share');}
+document.getElementById('shareBtn').addEventListener('click', async () => {
+try {
+const url = location.href;
+if (navigator.share) await navigator.share({ title: document.title, url });
+else { await navigator.clipboard.writeText(url); alert('Link copied'); }
+} catch (e) { console.warn(e); alert('Could not share'); }
 });
 
-function makeQRFor(url,size=320){const encoded=encodeURIComponent(url);return `https://quickchart.io/qr?size=${size}&text=${encoded}`;}
-const qrImg=document.getElementById('qrImg');
-const generateQRBtn=document.getElementById('generateQR');
-const downloadQR=document.getElementById('downloadQR');
-generateQRBtn.addEventListener('click', ()=>{const url=location.href; const src=makeQRFor(url,420); qrImg.src=src; downloadQR.href=src;});
-qrImg.src=makeQRFor(location.href,220);
-downloadQR.href=qrImg.src;
-
+function makeQRFor(url, size = 320) { const encoded = encodeURIComponent(url); return `https://quickchart.io/qr?size=${size}&text=${encoded}`; }
+const qrImg = document.getElementById('qrImg');
+const generateQRBtn = document.getElementById('generateQR');
+const downloadQR = document.getElementById('downloadQR');
+generateQRBtn.addEventListener('click', () => { const url = location.href; const src = makeQRFor(url, 420); qrImg.src = src; downloadQR.href = src; });
+qrImg.src = makeQRFor(location.href, 220);
+downloadQR.href = qrImg.src;
 </script>
 </body>
 </html>
