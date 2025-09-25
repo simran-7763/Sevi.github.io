@@ -1,454 +1,317 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Memory Page for Sevi</title>
-<style>
-:root {
---bg: #0f0f12;
---card: #0b0b0d;
---glass: rgba(255, 255, 255, 0.06);
---accent: #ff6b6b;
---muted: #bfc3c8;
---fw: 500;
---radius: 14px;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sevi!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and basic styles - Matching the dark, romantic layout from the image */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-html, body {
-height: 100%;
-margin: 0;
-font-family: Inter, ui-sans-serif, system-ui, Segoe UI, Roboto, "Helvetica Neue", Arial;
-background: linear-gradient(180deg, #05060a 0%, #0b0d12 100%);
-color: #fff;
--webkit-font-smoothing: antialiased;
-overflow-x: hidden;
-}
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #1e1e2f; /* Dark blue-gray background */
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
 
-body {
-padding: 20px;
-display: flex;
-align-items: center;
-justify-content: center;
-}
+        /* Container for responsive layout: Column on mobile, row on desktop */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
 
-.frame {
-width: 100%;
-max-width: 980px;
-background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
-border-radius: 18px;
-padding: 18px;
-box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
-overflow: hidden;
-position: relative;
-}
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-start;
+            }
+        }
 
-/* Laptop Layout (Default: >= 860px) */
-.stage {
-display: flex;
-gap: 18px;
-align-items: stretch;
-}
+        /* Photos section: Grid on desktop, stacked on mobile */
+        .photos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
 
-.viewer {
-flex: 1 1 560px;
-position: relative;
-border-radius: 12px;
-overflow: hidden;
-background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
-min-height: 360px; /* Fallback min-height */
-}
+        @media (min-width: 768px) {
+            .photos {
+                margin-bottom: 0;
+                margin-right: 30px;
+            }
+        }
 
-.slides {
-width: 100%;
-height: 100%;
-position: relative;
-touch-action: pan-y;
-z-index: 1;
-}
+        .photo {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
 
-.slide {
-position: absolute;
-inset: 0;
-display: flex;
-align-items: center;
-justify-content: center;
-backface-visibility: hidden;
-opacity: 0;
-transition: opacity 900ms cubic-bezier(0.2, 0.9, 0.2, 1), transform 900ms;
-transform: scale(0.98);
-}
+        .photo img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
 
-.slide img {
-width: 100%;
-height: auto;
-object-fit: contain; /* Keeps aspect ratio */
-display: block;
-filter: saturate(1.05) contrast(1.02);
-}
+        /* Add hearts overlay on photos */
+        .photo::after {
+            content: '❤️ 💕 ❤️';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 1.5em;
+            opacity: 0.7;
+        }
 
-.slide.is-active {
-opacity: 1;
-transform: scale(1);
-}
+        /* Message section */
+        .message-section {
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+        }
 
-.top-left {
-position: absolute;
-left: 14px;
-top: 14px;
-display: flex;
-gap: 8px;
-z-index: 10;
-}
+        @media (min-width: 768px) {
+            .message-section {
+                text-align: left;
+            }
+        }
 
-.btn {
-background: var(--glass);
-border: 1px solid rgba(255, 255, 255, 0.06);
-padding: 8px 10px;
-border-radius: 10px;
-font-weight: 600;
-color: var(--muted);
-cursor: pointer;
-backdrop-filter: blur(6px);
-display: flex;
-gap: 8px;
-align-items: center;
-}
+        .message-section h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
 
-.btn.primary {
-background: linear-gradient(90deg, rgba(255, 107, 107, 0.12), rgba(255, 107, 107, 0.06));
-color: #fff;
-border: 1px solid rgba(255, 107, 107, 0.18);
-}
+        .timer {
+            background-color: #2a2a3e;
+            border-radius: 20px;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            display: inline-block;
+        }
 
-.center-controls {
-position: absolute;
-left: 50%;
-top: 50%;
-transform: translate(-50%, -50%);
-z-index: 9;
-display: flex;
-gap: 12px;
-}
+        .message p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #d3d3d3;
+        }
 
-.nav-circle {
-width: 54px;
-height: 54px;
-border-radius: 50%;
-background: rgba(0, 0, 0, 0.35);
-display: flex;
-align-items: center;
-justify-content: center;
-cursor: pointer;
-border: 1px solid rgba(255, 255, 255, 0.06);
-}
+        /* Music player - Floating at bottom or top */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #2a2a3e;
+            border-radius: 50px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
 
-.message {
-margin-top: 12px;
-padding: 14px;
-border-radius: 12px;
-font-size: 16px;
-color: #f7f7f9;
-background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
-border: 1px solid rgba(255, 255, 255, 0.035);
-}
+        .music-player .play-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+            color: #00bfff;
+        }
 
-.side {
-width: 300px;
-min-width: 240px;
-display: flex;
-flex-direction: column;
-gap: 14px;
-}
+        .music-player span {
+            font-size: 1em;
+        }
 
-.audio-card, .qr-card {
-padding: 12px;
-border-radius: 12px;
-background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
-border: 1px solid rgba(255, 255, 255, 0.03);
-}
+        /* Falling hearts animation */
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
 
-.track {
-display: flex;
-gap: 10px;
-align-items: center;
-}
+        .heart {
+            position: absolute;
+            font-size: 2em;
+            color: #ff69b4;
+            animation: fall 5s linear infinite;
+            opacity: 0.5;
+        }
 
-.track .info {
-flex: 1;
-}
+        @keyframes fall {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
 
-.track .title {
-font-weight: 700;
-}
+        /* Audio hidden */
+        audio {
+            display: none;
+        }
 
-.controls {
-display: flex;
-gap: 8px;
-align-items: center;
-margin-top: 10px;
-}
-
-.thumbs {
-display: flex;
-gap: 8px;
-margin-top: 12px;
-overflow: auto;
-padding-bottom: 6px;
-}
-
-.thumbs img {
-width: 64px;
-height: 44px;
-object-fit: cover;
-border-radius: 8px;
-cursor: pointer;
-opacity: 0.9;
-border: 2px solid transparent;
-}
-
-.thumbs img.active {
-border-color: rgba(255, 255, 255, 0.14);
-opacity: 1;
-}
-
-.qr-card img {
-width: 160px;
-height: 160px;
-display: block;
-margin: 0 auto;
-border-radius: 8px;
-background: #fff;
-padding: 6px;
-}
-
-/* Mobile Layout (< 860px) */
-@media (max-width: 860px) {
-.stage {
-flex-direction: column;
-}
-.viewer {
-flex: 1 1 auto;
-min-height: 200px; /* Minimum height to ensure visibility */
-}
-.side {
-width: 100%;
-}
-.slide img {
-object-fit: contain; /* Match laptop for consistency */
-width: 100%;
-height: auto; /* Let image determine height */
-}
-.top-left {
-flex-direction: column;
-align-items: flex-start;
-gap: 10px;
-}
-.btn {
-padding: 12px 18px;
-font-size: 16px;
-width: 100%;
-justify-content: center;
-}
-.center-controls {
-gap: 20px;
-}
-.nav-circle {
-width: 50px;
-height: 50px;
-font-size: 22px;
-}
-.thumbs img {
-width: 50px;
-height: 35px;
-}
-.qr-card img {
-width: 140px;
-height: 140px;
-}
-.message {
-font-size: 14px;
-}
-}
-</style>
+        /* Media queries for mobile */
+        @media (max-width: 767px) {
+            .message-section h1 {
+                font-size: 1.5em;
+            }
+            .timer {
+                font-size: 1em;
+            }
+            .message p {
+                font-size: 1em;
+            }
+            .music-player {
+                bottom: 10px;
+                right: 10px;
+                padding: 8px 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="frame" id="app">
-<div class="stage">
-<div class="viewer" aria-live="polite">
-<div class="top-left">
-<button class="btn" id="playPauseBtn">▶ Play</button>
-<button class="btn" id="muteBtn">🔊 Unmuted</button>
-<button class="btn" id="shareBtn">🔗 Copy Link</button>
-</div>
-<div class="slides" id="slides" tabindex="0"></div>
-<div class="center-controls">
-<div class="nav-circle btn" id="prevBtn" title="Previous">◀</div>
-<div class="nav-circle btn primary" id="toggleAuto" title="Toggle autoplay">⟳</div>
-<div class="nav-circle btn" id="nextBtn" title="Next">▶</div>
-</div>
-</div>
-<div class="side">
-<div class="audio-card">
-<div style="display: flex; align-items: center; gap: 12px;">
-<div style="width: 56px; height: 56px; border-radius: 10px; background: linear-gradient(135deg, #ff6b6b, #ff9b9b); display: flex; align-items: center; justify-content: center; font-weight: 800">♪</div>
-<div class="info">
-<div class="title" id="trackTitle">Romantic Melody</div>
-<div class="subtitle" id="trackArtist" style="color: var(--muted); font-size: 13px">Anmol Sartaj</div>
-</div>
-</div>
-<div class="controls">
-<button class="btn" id="audioPlay">Play</button>
-<input id="vol" type="range" min="0" max="1" step="0.01" value="0.6" style="flex: 1">
-<div id="timeLabel" style="min-width: 60px; text-align: right; color: var(--muted); font-size: 13px">0:00</div>
-</div>
-<div style="margin-top: 10px; color: var(--muted); font-size: 13px">Tip: Mobile browsers often block autoplay, so tap Play if the music doesn't start automatically.</div>
-</div>
-<div class="audio-card">
-<div style="font-weight: 700; margin-bottom: 8px">Thumbnails</div>
-<div class="thumbs" id="thumbs"></div>
-</div>
-<div class="qr-card" style="text-align: center">
-<div style="font-weight: 700; margin-bottom: 8px">QR to this page</div>
-<img id="qrImg" alt="qr code" src="" />
-<div style="margin-top: 8px; display: flex; gap: 8px; justify-content: center">
-<button class="btn" id="generateQR">Generate QR</button>
-<a id="downloadQR" class="btn" download="qr.png">⬇ Download</a>
-</div>
-<div style="margin-top: 10px; color: var(--muted); font-size: 13px">Scan to open this page on mobile.</div>
-</div>
-</div>
-</div>
-<div class="message" id="messageArea"></div>
-</div>
+    <div class="container">
+        <!-- Photos section -->
+        <div class="photos">
+            <div class="photo"><img src="1.jpeg" alt="Photo 1"></div>
+            <div class="photo"><img src="2.webp" alt="Photo 2"></div>
+            <div class="photo"><img src="3.jpg" alt="Photo 3"></div>
+            <div class="photo"><img src="4.jpg" alt="Photo 4"></div>
+            <div class="photo"><img src="5.jpeg" alt="Photo 5"></div>
+        </div>
+        <!-- Message section -->
+        <div class="message-section">
+            <h1>I have loved you for</h1>
+            <div class="timer" id="love-timer">Calculating...</div>
+            <div class="message">
+                <p>Standing by the waves with you, Sevi, feels like life itself — sometimes calm, sometimes stormy, but always moving forward, always beautiful as long as we’re together. 🌊❤️</p>
+                <p>I know I fight with you, I get angry, and sometimes I don’t show things the way I should… but none of that means my love is any less. The truth is, you are my heart, and no matter what, it will always be you.</p>
+                <p>I can’t explain in words how much you mean to me — you’re not just part of my life, you are my life. Every moment with you feels like home, and every dream I see has you in it.</p>
+                <p>On your birthday, I just want to remind you — through every laugh, every fight, and every silent moment — my love for you only grows stronger. You are my everything, my forever, and the best part of my world. 💕</p>
+            </div>
+        </div>
+    </div>
+    <!-- Music player -->
+    <div class="music-player">
+        <span class="play-icon">🔊</span>
+        <span>My Song</span> <!-- Replace with your song title, e.g., "Die with a smile - Lady Gaga & Bruno Mars" -->
+    </div>
+    <!-- Falling hearts -->
+    <div class="hearts"></div>
+<!-- Audio with control -->
+<audio id="background-music">
+    <source src="mysong.mp3" type="audio/mpeg">
+</audio>
+<button id="audio-control" onclick="toggleAudio()">Play/Mute</button>
+
+<!-- Styling for audio control -->
+<style>
+    #audio-control {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #2a2a3e;
+        color: #00bfff;
+        border: none;
+        border-radius: 20px;
+        padding: 10px 20px;
+        cursor: pointer;
+        z-index: 2;
+        font-family: 'Poppins', sans-serif;
+    }
+    .music-player {
+        display: none; /* Hide the static player */
+    }
+</style>
 
 <script>
-const siteMessage = `Standing by the waves with you, <span style="color:#ff6b6b;font-weight:bold">Sevi</span>, feels like life itself — sometimes calm, sometimes stormy, but always moving forward, always beautiful as long as we’re together. 🌊❤️<br><br>I know I fight with you, I get angry, and sometimes I don’t show things the way I should… but none of that means my love is any less. The truth is, you are my heart, and no matter what, it will always be you.<br><br>I can’t explain in words how much you mean to me — you’re not just part of my life, you are my life. Every moment with you feels like home, and every dream I see has you in it.<br><br>On your birthday, I just want to remind you — through every laugh, every fight, and every silent moment — my love for you only grows stronger. You are my everything, my forever, and the best part of my world. 💕`;
+    const audio = document.getElementById('background-music');
+    const controlButton = document.getElementById('audio-control');
+    let isPlaying = false;
 
-document.getElementById('messageArea').innerHTML = siteMessage;
+    // Function to toggle play/pause and mute/unmute
+    function toggleAudio() {
+        if (!isPlaying) {
+            audio.play().then(() => {
+                isPlaying = true;
+                controlButton.textContent = 'Mute';
+            }).catch(error => {
+                alert('Audio failed to play. Check the file path or format. Error: ' + error);
+            });
+        } else if (audio.muted) {
+            audio.muted = false;
+            controlButton.textContent = 'Mute';
+        } else {
+            audio.muted = true;
+            controlButton.textContent = 'Unmute';
+        }
+    }
 
-const images = ['1.jpeg', '2.webp', '3.jpg', '4.jpg', '5.jpeg'];
-const audioSrc = 'mysong.mp3';
-const trackTitle = 'Romantic Melody';
-const trackArtist = 'Anmol Sartaj';
+    // Error handling if file fails to load
+    audio.addEventListener('error', () => {
+        alert('Audio file could not load. Ensure "mysong.mp3" is in the same folder as this file.');
+        controlButton.textContent = 'Play';
+        isPlaying = false;
+    });
 
-const slidesEl = document.getElementById('slides');
-const thumbsEl = document.getElementById('thumbs');
-const viewerEl = document.querySelector('.viewer');
+    // Update button text if audio ends (though loop is set)
+    audio.addEventListener('ended', () => {
+        controlButton.textContent = 'Play';
+        isPlaying = false;
+    });
+	
+	
+        // JavaScript for love timer - Calculate time since start date
+        function updateTimer() {
+            const startDate = new Date('2021-11-28T00:00:00'); // Replace with your actual start date (e.g., when you met)
+            const now = new Date(); // Using the provided current date; for live site, use new Date()
+            let diff = now - startDate;
 
-let current = 0;
-images.forEach((src, i) => {
-const s = document.createElement('div');
-s.className = 'slide' + (i === 0 ? ' is-active' : '');
-const img = document.createElement('img');
-img.src = src;
-img.alt = `Slide ${i + 1}`;
-s.appendChild(img);
-slidesEl.appendChild(s);
+            const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+            diff -= years * (1000 * 60 * 60 * 24 * 365.25);
 
-const t = document.createElement('img');
-t.src = src;
-t.dataset.index = i;
-if (i === 0) t.classList.add('active');
-t.addEventListener('click', () => goTo(parseInt(t.dataset.index)));
-thumbsEl.appendChild(t);
-});
+            const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.4375));
+            diff -= months * (1000 * 60 * 60 * 24 * 30.4375);
 
-const slideEls = Array.from(document.querySelectorAll('.slide'));
-const thumbEls = Array.from(document.querySelectorAll('.thumbs img'));
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            diff -= days * (1000 * 60 * 60 * 24);
 
-function goTo(idx) {
-if (idx < 0) idx = images.length - 1;
-if (idx >= images.length) idx = 0;
-slideEls[current].classList.remove('is-active');
-thumbEls[current].classList.remove('active');
-current = idx;
-slideEls[current].classList.add('is-active');
-thumbEls[current].classList.add('active');
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            diff -= hours * (1000 * 60 * 60);
 
-// Adjust viewer height based on active image's natural height
-const activeImg = slideEls[current].querySelector('img');
-if (activeImg.complete) {
-adjustViewerHeight(activeImg);
-} else {
-activeImg.onload = () => adjustViewerHeight(activeImg);
-}
-resetAuto();
-}
+            const minutes = Math.floor(diff / (1000 * 60));
+            diff -= minutes * (1000 * 60);
 
-function adjustViewerHeight(img) {
-const naturalWidth = img.naturalWidth;
-const naturalHeight = img.naturalHeight;
-const viewerWidth = viewerEl.offsetWidth;
-const aspectRatio = naturalHeight / naturalWidth;
-viewerEl.style.minHeight = `${viewerWidth * aspectRatio}px`;
-}
+            const seconds = Math.floor(diff / 1000);
 
-document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
-document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
-
-let auto = true;
-let autoInterval = 5000;
-let autoTimer = setInterval(() => goTo(current + 1), autoInterval);
-function resetAuto() { if (auto) { clearInterval(autoTimer); autoTimer = setInterval(() => goTo(current + 1), autoInterval); } }
-document.getElementById('toggleAuto').addEventListener('click', () => { auto = !auto; document.getElementById('toggleAuto').textContent = auto ? '⟳' : '⏸'; resetAuto(); });
-
-const audio = new Audio();
-audio.src = audioSrc;
-audio.loop = true;
-audio.volume = 0.6;
-
-const playBtn = document.getElementById('audioPlay');
-const globalPlayPause = document.getElementById('playPauseBtn');
-const muteBtn = document.getElementById('muteBtn');
-const vol = document.getElementById('vol');
-const timeLabel = document.getElementById('timeLabel');
-
-playBtn.addEventListener('click', toggleAudio);
-globalPlayPause.addEventListener('click', toggleAudio);
-muteBtn.addEventListener('click', () => { audio.muted = !audio.muted; muteBtn.textContent = audio.muted ? '🔇 Muted' : '🔊 Unmuted'; });
-vol.addEventListener('input', () => audio.volume = parseFloat(vol.value));
-
-function toggleAudio() {
-if (audio.paused) {
-audio.play().catch(err => console.warn('Autoplay blocked', err));
-playBtn.textContent = 'Pause';
-globalPlayPause.textContent = '⏸ Pause';
-} else {
-audio.pause();
-playBtn.textContent = 'Play';
-globalPlayPause.textContent = '▶ Play';
-}
-}
-
-audio.addEventListener('timeupdate', () => {
-const s = Math.floor(audio.currentTime % 60);
-const m = Math.floor(audio.currentTime / 60);
-timeLabel.textContent = `${m}:${s.toString().padStart(2, '0')}`;
-});
-
-if (!audioSrc) {
-playBtn.textContent = 'No audio set';
-playBtn.disabled = true;
-globalPlayPause.disabled = true;
-muteBtn.disabled = true;
-}
-
-document.getElementById('shareBtn').addEventListener('click', async () => {
-try {
-const url = location.href;
-if (navigator.share) await navigator.share({ title: document.title, url });
-else { await navigator.clipboard.writeText(url); alert('Link copied'); }
-} catch (e) { console.warn(e); alert('Could not share'); }
-});
-
-function makeQRFor(url, size = 320) { const encoded = encodeURIComponent(url); return `https://quickchart.io/qr?size=${size}&text=${encoded}`; }
-const qrImg = document.getElementById('qrImg');
-const generateQRBtn = document.getElementById('generateQR');
-const downloadQR = document.getElementById('downloadQR');
-generateQRBtn.addEventListener('click', () => { const url = location.href; const src = makeQRFor(url, 420); qrImg.src = src; downloadQR.href = src; });
-qrImg.src = makeQRFor(location.href, 220);
-downloadQR.href = qrImg.src;
-</script>
+            document.getElementById('love-timer').innerText = `${years} years, ${months} months, ${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds`;
+        }
+        updateTimer();
+        setInterval(updateTimer, 1000); // Update every second for live effect
+    </script>
 </body>
 </html>
