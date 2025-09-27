@@ -4,224 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Sevi!</title>
+    <meta name="description" content="A romantic birthday webpage for Sevi with timer, photos, music, and hearts.">
+    <!-- Open Graph & Twitter Card Metadata for better sharing -->
+    <meta property="og:title" content="Happy Birthday Sevi!">
+    <meta property="og:description" content="A romantic birthday surprise webpage for Sevi.">
+    <meta property="og:image" content="1.jpeg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Happy Birthday Sevi!">
+    <meta name="twitter:description" content="A romantic birthday surprise webpage for Sevi.">
+    <meta name="twitter:image" content="1.jpeg">
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #18182a;
-            color: #fff;
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            width: 100%;
-            max-width: 1100px;
-            padding: 20px 10px 80px 10px;
-            position: relative;
-            z-index: 1;
-            gap: 36px;
-        }
-        @media (min-width: 900px) {
-            .container {
-                flex-direction: row;
-                align-items: flex-start;
-                justify-content: center;
-                padding: 40px;
-                gap: 70px;
-            }
-        }
-
-        .photos {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 14px;
-            width: 100vw;
-            max-width: 380px;
-        }
-        @media (min-width: 600px) {
-            .photos {
-                max-width: 500px;
-                gap: 18px;
-            }
-        }
-        @media (min-width: 900px) {
-            .photos {
-                margin-right: 0;
-                max-width: 320px;
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .photo {
-            border-radius: 15px;
-            overflow: hidden;
-            aspect-ratio: 1/1.17;
-            position: relative;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.36);
-            background: #2a2a3e;
-            outline: 3px solid transparent;
-            transition: outline .2s;
-        }
-        .photo:focus-within, .photo:focus {
-            outline: 3px solid #ff92c2;
-        }
-        .photo img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .photo::after {
-            content: '❤️💖';
-            position: absolute;
-            top: 7px;
-            left: 11px;
-            font-size: 1.6em;
-            opacity: 0.7;
-            pointer-events: none;
-        }
-
-        /* Message Section */
-        .message-section {
-            width: 100%;
-            max-width: 520px;
-            text-align: center;
-        }
-        @media (min-width: 900px) {
-            .message-section {
-                text-align: left;
-            }
-        }
-        .message-section h1 {
-            font-size: 2.1em;
-            margin-bottom: 14px;
-            color: #ffeaff;
-            font-weight: 600;
-            letter-spacing: -0.5px;
-        }
-        .timer {
-            background: #222134;
-            border-radius: 16px;
-            padding: 11px 23px;
-            display: inline-block;
-            font-size: 1.13em;
-            color: #ffb4e6;
-            font-weight: 600;
-            margin-bottom: 22px;
-            transition: background .2s;
-        }
-        .message {
-            margin-top: 14px;
-        }
-        .message p {
-            font-size: 1.11em;
-            line-height: 1.7;
-            color: #d3d3d3;
-            margin-bottom: 15px;
-        }
-
-        /* Music player */
-        .music-player {
-            position: fixed;
-            bottom: 18px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #242448;
-            border-radius: 45px;
-            padding: 11px 25px;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 5px 17px rgba(0,0,0,0.26);
-            gap: 12px;
-            z-index: 2;
-            min-width: 175px;
-        }
-        .music-player .play-icon {
-            font-size: 1.6em;
-            color: #49d4ff;
-            margin-right: 8px;
-        }
-        .music-player span.player-title {
-            font-size: 1em;
-            color: #ffeaff;
-            font-weight: 600;
-        }
-        .music-player .visually-hidden {
-            position: absolute;
-            left: -9999px;
-        }
-
-        .music-player button {
-            border: none;
-            background: transparent;
-            color: #49d4ff;
-            font-size: 1.4em;
-            cursor: pointer;
-            margin-right: 13px;
-            transition: color .2s;
-        }
-        .music-player button:focus {
-            outline: 2px solid #ffb4e6;
-        }
-
-        /* Accessibility: keyboard-focus on play button */
-        .music-player:focus-within {
-            box-shadow: 0 0 0 3px #ffb4e6;
-        }
-
-        /* Falling hearts */
-        .hearts {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 0;
-        }
-
-        .heart {
-            position: absolute;
-            font-size: 2em;
-            color: #ff92c2;
-            opacity: 0.45;
-            animation: fall 6s linear infinite;
-        }
-        @keyframes fall {
-            0% { transform: translateY(-100%);}
-            100% {transform: translateY(100vh);}
-        }
-
-        /* Accessibility/contrast - High contrast on focus */
-        a:focus, button:focus {
-            outline: 2px solid #f80084 !important;
-        }
-
-        audio {
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Photos section, use your image names or replace with attached image paths as needed -->
-        <div class="photos" aria-label="Photo memories">
-            <div class="photo" tabindex="0"><img src="1.jpeg" alt="A happy moment together"></div>
-            <div class="photo" tabindex="0"><img src="2.webp" alt="Smiling couple"></div>
-            <div class="photo" tabindex="0"><img src="3.jpg" alt="Sunset memory"></div>
-        </div>
-        <div class="message-section">
+    <a href="#main-content" class="skip-link">Skip to Content</a>
+    <main id="main-content" class="container">
+        <section class="photos" aria-label="Photo memories">
+            <figure class="photo" tabindex="0"><img src="1.jpeg" alt="Sevi smiling at the beach on her birthday" loading="lazy"></figure>
+            <figure class="photo" tabindex="0"><img src="2.webp" alt="Candid moment of smiling together under sunset" loading="lazy"></figure>
+            <figure class="photo" tabindex="0"><img src="3.jpg" alt="Sunset walk with Sevi" loading="lazy"></figure>
+        </section>
+        <section class="message-section">
             <h1 id="timer-header">I have loved you for</h1>
             <div class="timer" id="love-timer" aria-live="polite">Calculating...</div>
             <div class="message">
@@ -230,95 +34,22 @@
                 <p>I can’t explain in words how much you mean to me — you’re not just part of my life, you are my life. Every moment with you feels like home, and every dream I see has you in it.</p>
                 <p>On your birthday, I just want to remind you — through every laugh, every fight, and every silent moment — my love for you only grows stronger. You are my everything, my forever, and the best part of my world. 💕</p>
             </div>
+        </section>
+    </main>
+    <footer>
+        <div class="music-player" role="region" aria-label="Music Player">
+            <button id="playBtn" aria-label="Pause background music" aria-pressed="true" tabindex="0">⏸️</button>
+            <span class="play-icon" aria-hidden="true">🔊</span>
+            <span id="playerTitle" class="player-title">My Song</span>
+            <span class="visually-hidden" id="audioStatus">Playing</span>
         </div>
-    </div>
-    <!-- Music player: Accessible and keyboard-navigable -->
-    <div class="music-player" role="region" aria-label="Music Player">
-        <button id="playBtn" tabindex="0" aria-label="Play or pause background music">⏯️</button>
-        <span class="play-icon" aria-hidden="true">🔊</span>
-        <span id="playerTitle" class="player-title">My Song</span>
-        <span class="visually-hidden" id="audioStatus">Playing</span>
-    </div>
-    <!-- Falling hearts -->
+        <audio id="background-music" loop>
+            <source src="mysong.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </footer>
     <div class="hearts" aria-hidden="true"></div>
-    <!-- Audio -->
-    <audio id="background-music" loop>
-        <source src="mysong.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    <script>
-        // Falling hearts
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = (Math.random() * 0.8 + 1.2) + "em";
-            heart.style.animationDuration = (Math.random() * 2 + 4) + 's';
-            document.querySelector('.hearts').appendChild(heart);
-            setTimeout(() => heart.remove(), 6200);
-        }
-        setInterval(createHeart, 540);
-
-        // Timer
-        function updateTimer() {
-            const startDate = new Date('2023-05-03T00:00:00'); // Set your start date
-            const now = new Date();
-            let diff = now.getTime() - startDate.getTime();
-
-            const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
-            diff -= years * (1000 * 60 * 60 * 24 * 365.25);
-
-            const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.4375));
-            diff -= months * (1000 * 60 * 60 * 24 * 30.4375);
-
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            diff -= days * (1000 * 60 * 60 * 24);
-
-            const hours = Math.floor(diff / (1000 * 60 * 60));
-            diff -= hours * (1000 * 60 * 60);
-
-            const minutes = Math.floor(diff / (1000 * 60));
-            diff -= minutes * (1000 * 60);
-
-            const seconds = Math.floor(diff / 1000);
-
-            document.getElementById('love-timer').innerText = 
-                `${years} years, ${months} months, ${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds`;
-        }
-        updateTimer();
-        setInterval(updateTimer, 1000);
-
-        // Music player: accessible controls
-        const audio = document.getElementById('background-music');
-        const playBtn = document.getElementById('playBtn');
-        const audioStatus = document.getElementById('audioStatus');
-
-        function toggleAudio() {
-            if(audio.paused) {
-                audio.play();
-                audioStatus.textContent = "Playing";
-                playBtn.textContent = "⏸️";
-            } else {
-                audio.pause();
-                audioStatus.textContent = "Paused";
-                playBtn.textContent = "▶️";
-            }
-        }
-        playBtn.addEventListener("click", toggleAudio);
-
-        // Space/Enter key for accessibility on music play button
-        playBtn.addEventListener("keydown", e => {
-            if(e.key === " " || e.key === "Enter") {
-                e.preventDefault();
-                toggleAudio();
-            }
-        });
-
-        // Auto-start on load, but respect browser policies
-        window.addEventListener('DOMContentLoaded', ()=>{
-            playBtn.textContent = "⏸️";
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
+
