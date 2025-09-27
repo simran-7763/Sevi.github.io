@@ -6,151 +6,186 @@
     <title>Happy Birthday Sevi!</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Reset and basic styles - Matching the dark, romantic layout from the image */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #1e1e2f; /* Dark blue-gray background */
-            color: #ffffff;
+            background: #18182a;
+            color: #fff;
+            margin: 0;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
             position: relative;
         }
 
-        /* Container for responsive layout: Column on mobile, row on desktop */
         .container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
-            max-width: 1200px;
+            justify-content: flex-start;
             width: 100%;
+            max-width: 1100px;
+            padding: 20px 10px 80px 10px;
             position: relative;
             z-index: 1;
+            gap: 36px;
         }
-
-        @media (min-width: 768px) {
+        @media (min-width: 900px) {
             .container {
                 flex-direction: row;
-                justify-content: space-between;
                 align-items: flex-start;
+                justify-content: center;
+                padding: 40px;
+                gap: 70px;
             }
         }
 
-        /* Photos section: Grid on desktop, stacked on mobile */
         .photos {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            width: 100%;
-            max-width: 600px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px;
+            width: 100vw;
+            max-width: 380px;
         }
-
-        @media (min-width: 768px) {
+        @media (min-width: 600px) {
             .photos {
-                margin-bottom: 0;
-                margin-right: 30px;
+                max-width: 500px;
+                gap: 18px;
+            }
+        }
+        @media (min-width: 900px) {
+            .photos {
+                margin-right: 0;
+                max-width: 320px;
+                grid-template-columns: 1fr;
             }
         }
 
         .photo {
-            position: relative;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            aspect-ratio: 1/1.17;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.36);
+            background: #2a2a3e;
+            outline: 3px solid transparent;
+            transition: outline .2s;
         }
-
+        .photo:focus-within, .photo:focus {
+            outline: 3px solid #ff92c2;
+        }
         .photo img {
-            width: 100%;
-            height: auto;
             display: block;
-        }
-
-        /* Add hearts overlay on photos */
-        .photo::after {
-            content: '❤️ 💕 ❤️';
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            font-size: 1.5em;
-            opacity: 0.7;
-        }
-
-        /* Message section */
-        .message-section {
-            text-align: center;
             width: 100%;
-            max-width: 600px;
+            height: 100%;
+            object-fit: cover;
+        }
+        .photo::after {
+            content: '❤️💖';
+            position: absolute;
+            top: 7px;
+            left: 11px;
+            font-size: 1.6em;
+            opacity: 0.7;
+            pointer-events: none;
         }
 
-        @media (min-width: 768px) {
+        /* Message Section */
+        .message-section {
+            width: 100%;
+            max-width: 520px;
+            text-align: center;
+        }
+        @media (min-width: 900px) {
             .message-section {
                 text-align: left;
             }
         }
-
         .message-section h1 {
-            font-size: 2em;
-            margin-bottom: 10px;
-            color: #ffffff;
+            font-size: 2.1em;
+            margin-bottom: 14px;
+            color: #ffeaff;
+            font-weight: 600;
+            letter-spacing: -0.5px;
         }
-
         .timer {
-            background-color: #2a2a3e;
-            border-radius: 20px;
-            padding: 10px 20px;
-            margin-bottom: 20px;
-            font-size: 1.2em;
+            background: #222134;
+            border-radius: 16px;
+            padding: 11px 23px;
             display: inline-block;
+            font-size: 1.13em;
+            color: #ffb4e6;
+            font-weight: 600;
+            margin-bottom: 22px;
+            transition: background .2s;
         }
-
+        .message {
+            margin-top: 14px;
+        }
         .message p {
-            font-size: 1.2em;
-            line-height: 1.6;
-            margin-bottom: 15px;
+            font-size: 1.11em;
+            line-height: 1.7;
             color: #d3d3d3;
+            margin-bottom: 15px;
         }
 
-        /* Music player - Floating at bottom or top */
+        /* Music player */
         .music-player {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #2a2a3e;
-            border-radius: 50px;
-            padding: 10px 20px;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #242448;
+            border-radius: 45px;
+            padding: 11px 25px;
             display: flex;
             align-items: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 5px 17px rgba(0,0,0,0.26);
+            gap: 12px;
             z-index: 2;
+            min-width: 175px;
         }
-
         .music-player .play-icon {
-            font-size: 1.5em;
-            margin-right: 10px;
-            color: #00bfff;
+            font-size: 1.6em;
+            color: #49d4ff;
+            margin-right: 8px;
         }
-
-        .music-player span {
+        .music-player span.player-title {
             font-size: 1em;
+            color: #ffeaff;
+            font-weight: 600;
+        }
+        .music-player .visually-hidden {
+            position: absolute;
+            left: -9999px;
         }
 
-        /* Falling hearts animation */
+        .music-player button {
+            border: none;
+            background: transparent;
+            color: #49d4ff;
+            font-size: 1.4em;
+            cursor: pointer;
+            margin-right: 13px;
+            transition: color .2s;
+        }
+        .music-player button:focus {
+            outline: 2px solid #ffb4e6;
+        }
+
+        /* Accessibility: keyboard-focus on play button */
+        .music-player:focus-within {
+            box-shadow: 0 0 0 3px #ffb4e6;
+        }
+
+        /* Falling hearts */
         .hearts {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none;
             overflow: hidden;
             z-index: 0;
@@ -159,54 +194,36 @@
         .heart {
             position: absolute;
             font-size: 2em;
-            color: #ff69b4;
-            animation: fall 5s linear infinite;
-            opacity: 0.5;
+            color: #ff92c2;
+            opacity: 0.45;
+            animation: fall 6s linear infinite;
         }
-
         @keyframes fall {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100vh); }
+            0% { transform: translateY(-100%);}
+            100% {transform: translateY(100vh);}
         }
 
-        /* Audio hidden */
+        /* Accessibility/contrast - High contrast on focus */
+        a:focus, button:focus {
+            outline: 2px solid #f80084 !important;
+        }
+
         audio {
             display: none;
-        }
-
-        /* Media queries for mobile */
-        @media (max-width: 767px) {
-            .message-section h1 {
-                font-size: 1.5em;
-            }
-            .timer {
-                font-size: 1em;
-            }
-            .message p {
-                font-size: 1em;
-            }
-            .music-player {
-                bottom: 10px;
-                right: 10px;
-                padding: 8px 15px;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Photos section -->
-        <div class="photos">
-            <div class="photo"><img src="1.jpeg" alt="Photo 1"></div>
-            <div class="photo"><img src="2.webp" alt="Photo 2"></div>
-            <div class="photo"><img src="3.jpg" alt="Photo 3"></div>
-            <div class="photo"><img src="4.jpg" alt="Photo 4"></div>
-            <div class="photo"><img src="5.jpeg" alt="Photo 5"></div>
+        <!-- Photos section, use your image names or replace with attached image paths as needed -->
+        <div class="photos" aria-label="Photo memories">
+            <div class="photo" tabindex="0"><img src="image1.jpg" alt="A happy moment together"></div>
+            <div class="photo" tabindex="0"><img src="image2.jpg" alt="Smiling couple"></div>
+            <div class="photo" tabindex="0"><img src="image3.jpg" alt="Sunset memory"></div>
         </div>
-        <!-- Message section -->
         <div class="message-section">
-            <h1>I have loved you for</h1>
-            <div class="timer" id="love-timer">Calculating...</div>
+            <h1 id="timer-header">I have loved you for</h1>
+            <div class="timer" id="love-timer" aria-live="polite">Calculating...</div>
             <div class="message">
                 <p>Standing by the waves with you, Sevi, feels like life itself — sometimes calm, sometimes stormy, but always moving forward, always beautiful as long as we’re together. 🌊❤️</p>
                 <p>I know I fight with you, I get angry, and sometimes I don’t show things the way I should… but none of that means my love is any less. The truth is, you are my heart, and no matter what, it will always be you.</p>
@@ -215,81 +232,39 @@
             </div>
         </div>
     </div>
-    <!-- Music player -->
-    <div class="music-player">
-        <span class="play-icon">🔊</span>
-        <span>My Song</span> <!-- Replace with your song title, e.g., "Die with a smile - Lady Gaga & Bruno Mars" -->
+    <!-- Music player: Accessible and keyboard-navigable -->
+    <div class="music-player" role="region" aria-label="Music Player">
+        <button id="playBtn" tabindex="0" aria-label="Play or pause background music">⏯️</button>
+        <span class="play-icon" aria-hidden="true">🔊</span>
+        <span id="playerTitle" class="player-title">My Song</span>
+        <span class="visually-hidden" id="audioStatus">Playing</span>
     </div>
     <!-- Falling hearts -->
-    <div class="hearts"></div>
-<!-- Audio with control -->
-<audio id="background-music">
-    <source src="mysong.mp3" type="audio/mpeg">
-</audio>
-<button id="audio-control" onclick="toggleAudio()">Play/Mute</button>
-
-<!-- Styling for audio control -->
-<style>
-    #audio-control {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background-color: #2a2a3e;
-        color: #00bfff;
-        border: none;
-        border-radius: 20px;
-        padding: 10px 20px;
-        cursor: pointer;
-        z-index: 2;
-        font-family: 'Poppins', sans-serif;
-    }
-    .music-player {
-        display: none; /* Hide the static player */
-    }
-</style>
-
-<script>
-    const audio = document.getElementById('background-music');
-    const controlButton = document.getElementById('audio-control');
-    let isPlaying = false;
-
-    // Function to toggle play/pause and mute/unmute
-    function toggleAudio() {
-        if (!isPlaying) {
-            audio.play().then(() => {
-                isPlaying = true;
-                controlButton.textContent = 'Mute';
-            }).catch(error => {
-                alert('Audio failed to play. Check the file path or format. Error: ' + error);
-            });
-        } else if (audio.muted) {
-            audio.muted = false;
-            controlButton.textContent = 'Mute';
-        } else {
-            audio.muted = true;
-            controlButton.textContent = 'Unmute';
+    <div class="hearts" aria-hidden="true"></div>
+    <!-- Audio -->
+    <audio id="background-music" loop>
+        <source src="mysong.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <script>
+        // Falling hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 0.8 + 1.2) + "em";
+            heart.style.animationDuration = (Math.random() * 2 + 4) + 's';
+            document.querySelector('.hearts').appendChild(heart);
+            setTimeout(() => heart.remove(), 6200);
         }
-    }
+        setInterval(createHeart, 540);
 
-    // Error handling if file fails to load
-    audio.addEventListener('error', () => {
-        alert('Audio file could not load. Ensure "mysong.mp3" is in the same folder as this file.');
-        controlButton.textContent = 'Play';
-        isPlaying = false;
-    });
-
-    // Update button text if audio ends (though loop is set)
-    audio.addEventListener('ended', () => {
-        controlButton.textContent = 'Play';
-        isPlaying = false;
-    });
-	
-	
-        // JavaScript for love timer - Calculate time since start date
+        // Timer
         function updateTimer() {
-            const startDate = new Date('2021-11-28T00:00:00'); // Replace with your actual start date (e.g., when you met)
-            const now = new Date(); // Using the provided current date; for live site, use new Date()
-            let diff = now - startDate;
+            const startDate = new Date('2023-05-03T00:00:00'); // Set your start date
+            const now = new Date();
+            let diff = now.getTime() - startDate.getTime();
 
             const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
             diff -= years * (1000 * 60 * 60 * 24 * 365.25);
@@ -308,10 +283,42 @@
 
             const seconds = Math.floor(diff / 1000);
 
-            document.getElementById('love-timer').innerText = `${years} years, ${months} months, ${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds`;
+            document.getElementById('love-timer').innerText = 
+                `${years} years, ${months} months, ${days} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds`;
         }
         updateTimer();
-        setInterval(updateTimer, 1000); // Update every second for live effect
+        setInterval(updateTimer, 1000);
+
+        // Music player: accessible controls
+        const audio = document.getElementById('background-music');
+        const playBtn = document.getElementById('playBtn');
+        const audioStatus = document.getElementById('audioStatus');
+
+        function toggleAudio() {
+            if(audio.paused) {
+                audio.play();
+                audioStatus.textContent = "Playing";
+                playBtn.textContent = "⏸️";
+            } else {
+                audio.pause();
+                audioStatus.textContent = "Paused";
+                playBtn.textContent = "▶️";
+            }
+        }
+        playBtn.addEventListener("click", toggleAudio);
+
+        // Space/Enter key for accessibility on music play button
+        playBtn.addEventListener("keydown", e => {
+            if(e.key === " " || e.key === "Enter") {
+                e.preventDefault();
+                toggleAudio();
+            }
+        });
+
+        // Auto-start on load, but respect browser policies
+        window.addEventListener('DOMContentLoaded', ()=>{
+            playBtn.textContent = "⏸️";
+        });
     </script>
 </body>
 </html>
